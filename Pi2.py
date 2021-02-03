@@ -1,6 +1,6 @@
 ########################################
 # Name: Brenden Hohenstein
-# Date:
+# Date: 2/5/21
 # Description: Paper piano (v2).
 ########################################
 import RPi.GPIO as GPIO
@@ -12,12 +12,11 @@ MIXER_SIZE = -16
 MIXER_CHANS = 1
 MIXER_BUFF = 1024
 
-switch = 1
 
 # the note generator class
 class Note(pygame.mixer.Sound):
     # note that volume ranges from 0.0 to 1.0
-    def __init__(self, frequency, volume):
+    def __init__(self, frequency, volume, waveform):
         self.frequency = frequency
         # initialize the note using an array of samples
         pygame.mixer.Sound.__init__(self,buffer=self.build_samples())
@@ -32,24 +31,14 @@ class Note(pygame.mixer.Sound):
         # signed 16-bit "shorts")
         samples = array("h", [0] * period)
 
-        # generate the note's samples
-        if switch == 1:
-        
+        # generate the note's sample:
+        if waveform == "Square"
             for t in range(period):
                 if (t < period / 2):
                     samples[t] = amplitude
                 else:
                     samples[t] = -amplitude
             return samples
-
-        if switch == 2:
-            for t in range(period):
-                if (t < period / 4):
-                    samples[t] = 16
-                else:
-                    samples[t] = -16
-            return samples
-        
         
 # waits until a note is pressed
 def wait_for_note_start():
@@ -155,12 +144,8 @@ try:
                 song = []
             # note the recording state and turn on the red LED
             recording = not recording
-            GPIO.output(red, recording)
-        #Switches the sound type:
-        elif(key == "switch1"):
-            switch = 1
-        elif(key == "switch2"):
-            switch = 2
+            GPIO.output(red, recording
+       
         # if the play button was pressed
         elif (key == "play"):
             # if recording, stop
